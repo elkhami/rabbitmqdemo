@@ -15,9 +15,6 @@ public class RabbitMqConfig {
     public static final String ORDER_EXCHANGE =
             "spring.order.exchange";
 
-    public static final String ORDER_QUEUE =
-            "spring.order.queue";
-
     public static final String ORDER_CREATED_ROUTING_KEY =
             "order.created";
 
@@ -34,32 +31,6 @@ public class RabbitMqConfig {
                 true,       // durable
                 false       // autoDelete
         );
-    }
-
-
-    @Bean
-    public Queue orderQueue() {
-        
-        System.out.println(">>> Creating ORDER QUEUE bean <<<");
-        return new Queue(
-                ORDER_QUEUE,
-                true,       // durable
-                false,      // exclusive
-                false       // autoDelete
-        );
-    }
-
-
-    @Bean
-    public Binding orderBinding(
-            Queue orderQueue,
-            DirectExchange orderExchange) {
-
-        System.out.println(">>> Creating ORDER BINDING bean <<<");
-        return BindingBuilder
-                .bind(orderQueue)
-                .to(orderExchange)
-                .with(ORDER_CREATED_ROUTING_KEY);
     }
 
     @Bean
