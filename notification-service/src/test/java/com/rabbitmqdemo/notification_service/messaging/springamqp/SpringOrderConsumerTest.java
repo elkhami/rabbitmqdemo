@@ -31,7 +31,7 @@ class SpringOrderConsumerTest {
                 new BigDecimal("149.99"),
                 Instant.now());
 
-        consumer.consume(event);
+        //consumer.consume(event);
 
         verify(notificationService)
                 .sendOrderCreatedNotification(event);
