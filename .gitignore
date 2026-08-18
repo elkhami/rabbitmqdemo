@@ -1,0 +1,43 @@
+# Maven build output
+**/target/
+
+# Generated Maven wrapper binary
+**/.mvn/wrapper/maven-wrapper.jar
+
+# IDE settings
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.sts4-cache/
+
+# NetBeans
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+
+# Spring and local environment files
+**/application-local.properties
+**/application-local.yml
+.env
+.env.*
+!.env.example
+
+# Logs and runtime files
+*.log
+logs/
+*.pid
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Generated documentation
+**/HELP.md
