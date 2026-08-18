@@ -25,6 +25,12 @@ public class RabbitMqConfig {
 
     public static final String ORDER_DEAD_ROUTING_KEY = "order.dead";
 
+    public static final String ORDER_RETRY_EXCHANGE = "spring.order.retry.exchange";
+
+    public static final String ORDER_RETRY_QUEUE = "spring.order.retry.queue";
+
+    public static final String ORDER_RETRY_ROUTING_KEY = "order.retry";
+
     // Main exchange
     @Bean
     public DirectExchange orderExchange() {
@@ -85,6 +91,48 @@ public class RabbitMqConfig {
                 .bind(orderDeadLetterQueue)
                 .to(orderDeadLetterExchange)
                 .with(ORDER_DEAD_ROUTING_KEY);
+    }
+
+    // Retry exchange
+    @Bean
+    public DirectExchange orderRetryExchange() {
+        return new DirectExchange(
+                ORDER_RETRY_EXCHANGE,
+                true,
+                false);
+    }
+
+    // Retry queue
+    @Bean
+    public Queue orderRetryQueue() {
+
+        return QueueBuilder
+                .durable(ORDER_RETRY_QUEUE)
+
+                // Message waits here for 5 seconds
+                .ttl(5_000)
+
+                // After TTL, dead-letter it back
+                // to the normal order exchange
+                .deadLetterExchange(ORDER_EXCHANGE)
+
+                // Route it back to the normal order queue
+                .deadLetterRoutingKey(
+                        ORDER_CREATED_ROUTING_KEY)
+
+                .build();
+    }
+
+    // Retry binding
+    @Bean
+    public Binding orderRetryBinding(
+            Queue orderRetryQueue,
+            DirectExchange orderRetryExchange) {
+
+        return BindingBuilder
+                .bind(orderRetryQueue)
+                .to(orderRetryExchange)
+                .with(ORDER_RETRY_ROUTING_KEY);
     }
     
     @Bean

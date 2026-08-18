@@ -16,6 +16,6 @@ public class NotificationService {
         System.out.println(
                 "Order amount: " + event.amount());
 
-        throw new RuntimeException("Notification failed!");
+        //throw new RuntimeException("Notification failed!");
     }
 }
