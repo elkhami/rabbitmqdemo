@@ -25,5 +25,7 @@ public class SpringOrderConsumer {
 
         notificationService
                 .sendOrderCreatedNotification(event);
+
+        System.out.println("Processing finished.");
     }
 }
